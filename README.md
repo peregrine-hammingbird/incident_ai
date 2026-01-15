@@ -1,3 +1,6 @@
+![Incident Reports Index Screenshot](docs/index_view.png)
+
+
 # incident_ai  
 SOC向けインシデントトリアージ支援AI（プロトタイプ）
 
