@@ -1,0 +1,11 @@
+time,alert,host,category,sid,tier,suspicion,confidence,drivers,file
+20260115-1829,MultipleFailedSMBLogins,DC01,AuthAbuse,ec3fa4d2-0e20-4eda-afb8-f5cf36ac23d4,Medium,74,35,,20260115-1829_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1819,MultipleFailedSMBLogins,DC01,AuthAbuse,6b0de3ad-c9f6-45ee-b209-998142267596,Medium,74,35,,20260115-1819_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1811,MultipleFailedSMBLogins,DC01,AuthAbuse,a302ebac-d9b5-4b58-b374-6ae837442e8c,Medium,74,35,,20260115-1811_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1759,MultipleFailedSMBLogins,DC01,AuthAbuse,45c717ed-b2ed-4ca9-a063-59dd09ff518e,Medium,74,35,,20260115-1759_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1750,MultipleFailedSMBLogins,DC01,AuthAbuse,d013ed1e-1595-4567-8c92-cf7a4ae266c6,Medium,74,35,,20260115-1750_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1709,MultipleFailedSMBLogins,DC01,AuthAbuse,86e26890-acfc-439a-a423-14a2f41a87a8,Low,Unknown,Unknown,,20260115-1709_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1703,MultipleFailedSMBLogins,DC01,AuthAbuse,2c4fc45f-cd0e-4080-8a89-8531201b48fa,Low,Unknown,Unknown,,20260115-1703_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1700,MultipleFailedSMBLogins,DC01,AuthAbuse,Unknown,Low,Unknown,Unknown,,20260115-1700_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1652,MultipleFailedSMBLogins,DC01,AuthAbuse,Unknown,Low,Unknown,Unknown,,20260115-1652_MultipleFailedSMBLogins_DC01_AuthAbuse.md
+20260115-1444,MultipleFailedSMBLogins,DC01,AuthAbuse,Unknown,Low,Unknown,Unknown,,20260115-1444_MultipleFailedSMBLogins_DC01_AuthAbuse.md

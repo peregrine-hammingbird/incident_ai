@@ -1,0 +1,7 @@
+Alert Name: Multiple Failed SMB Logins
+Source IP: 10.10.14.23
+Target Host: DC01
+Event Code: 4625
+Failed Count: 25
+Time Window: 5 minutes
+Usernames: admin, test, backup
