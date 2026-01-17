@@ -3,6 +3,7 @@ import re
 import os
 from datetime import datetime, timezone
 import uuid
+import json
 
 def ensure_splunk_sid(fields: dict) -> dict:
     """
@@ -39,29 +40,107 @@ def build_front_matter(fields: dict, scores: dict) -> str:
     return "".join(fm)
 
 def parse_alert_text(alert_text: str) -> dict:
-    """
-    Splunk / SIEM 風の Key: Value テキストを dict に変換
-    """
+    alert_text = alert_text.strip()
     fields = {}
 
-    for line in alert_text.splitlines():
-        if ":" in line:
-            key, value = line.split(":", 1)
-            fields[key.strip()] = value.strip()
+    # 1) JSON なら読む
+    if alert_text.startswith("{") or alert_text.startswith("["):
+        try:
+            obj = json.loads(alert_text)
+            if isinstance(obj, list) and obj:
+                obj = obj[0]
+            if isinstance(obj, dict):
+                fields.update(obj)
+        except json.JSONDecodeError:
+            fields = {}
 
-    # 最低限の正規化（欠損対策）
+    # 2) JSONで取れなければ Key: Value
+    if not fields:
+        for line in alert_text.splitlines():
+            if ":" in line:
+                key, value = line.split(":", 1)
+                fields[key.strip()] = value.strip()
+
+    # 3) JSON特有の型を吸収（ここが重要）
+    # usernames: ["a","b"] -> "a, b"
+    if isinstance(fields.get("usernames"), list):
+        fields["usernames"] = ", ".join(str(x) for x in fields["usernames"])
+
+    # rationale / recommended_next_steps も list なら文字列化（LLM用に便利）
+    if isinstance(fields.get("rationale"), list):
+        fields["rationale"] = " / ".join(str(x) for x in fields["rationale"])
+    if isinstance(fields.get("recommended_next_steps"), list):
+        fields["recommended_next_steps"] = " / ".join(str(x) for x in fields["recommended_next_steps"])
+
+    # time_window_minutes: 5 -> "5 minutes"
+    if "time_window_minutes" in fields and "Time Window" not in fields:
+        fields["Time Window"] = f"{fields['time_window_minutes']} minutes"
+
+    # event_id: 4625 -> Event Code
+    if "event_id" in fields and "Event Code" not in fields:
+        fields["Event Code"] = str(fields["event_id"])
+
+    # failed_count -> Failed Count
+    if "failed_count" in fields and "Failed Count" not in fields:
+        fields["Failed Count"] = str(fields["failed_count"])
+
+    # 4) 最低限の正規化（内部標準キーを埋める）
     normalized = {
-        "Alert Name": fields.get("Alert Name", "UnknownAlert"),
-        "Source IP": fields.get("Source IP", "UnknownIP"),
-        "Target Host": fields.get("Target Host", "UnknownHost"),
-        "Event Code": fields.get("Event Code", "Unknown"),
+        "Alert Name": (
+            fields.get("Alert Name")
+            or fields.get("alert_name")
+            or fields.get("search_name")
+            or fields.get("rule_name")
+            or "UnknownAlert"
+        ),
+        "Source IP": (
+            fields.get("Source IP")
+            or fields.get("source_ip")
+            or fields.get("src_ip")
+            or fields.get("src")
+            or "UnknownIP"
+        ),
+        "Target Host": (
+            fields.get("Target Host")
+            or fields.get("target_host")
+            or fields.get("dest_host")
+            or fields.get("host")
+            or "UnknownHost"
+        ),
+        "Event Code": (
+            fields.get("Event Code")
+            or fields.get("event_code")
+            or fields.get("EventCode")
+            or "Unknown"
+        ),
+        "Failed Count": (
+            fields.get("Failed Count")
+            or fields.get("failed_count")
+            or fields.get("failures")
+            or ""
+        ),
+        "Time Window": (
+            fields.get("Time Window")
+            or fields.get("time_window")
+            or fields.get("window")
+            or ""
+        ),
+        "Usernames": (
+            fields.get("Usernames")
+            or fields.get("usernames")
+            or fields.get("users")
+            or ""
+        ),
+        "Splunk SID": (
+            fields.get("Splunk SID")
+            or fields.get("splunk_sid")
+            or fields.get("sid")
+            or ""
+        ),
     }
 
-    # 他フィールドも保持
     normalized.update(fields)
-
     return normalized
-
 
 def sanitize(text: str) -> str:
     """
