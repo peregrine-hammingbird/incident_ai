@@ -1,0 +1,8 @@
+Alert Name: Multiple Failed SMB Logins
+Source IP: 203.0.113.10
+Target Host: DC01
+Event Code: 4625
+Failed Count: 28
+Time Window: 5 minutes
+Usernames: administrator, admin, svc_backup, test, guest
+Splunk SID: demo-sid-0001

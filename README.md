@@ -37,6 +37,69 @@ Incident AI helps analysts:
 
 ---
 
+## Quickstart
+
+### Requirements
+- Python 3.10+
+- OpenAI API key (environment variable)
+
+### Install
+```bash
+pip install openai
+```
+
+### Run (file input)
+```bash
+export OPENAI_API_KEY="YOUR_KEY"
+python main.py samples/alert_4625.txt
+```
+
+### Run (stdin)
+```bash
+cat samples/alert_4625.txt | python main.py
+```
+
+### Optional: model knobs
+```bash
+export INCIDENT_AI_MODEL="gpt-4o-mini"
+export INCIDENT_AI_TEMPERATURE="0.2"
+```
+
+After running:
+- A new report is generated under `output/examples/*.md`
+- `output/examples/index.md` and `output/examples/index.csv` are updated
+
+---
+
+## Demo (What to Expect)
+
+### Input
+- Raw alert text (Key: Value)
+- Structured JSON (single object or list of events)
+
+### Output
+Incident AI generates a standardized Markdown report that includes:
+- YAML front matter (SID, host, IP, event code, scoring)
+- A **"Scoring (Reference Only)"** block (**suspicion / confidence** + explainable drivers)
+- Analyst-oriented narrative sections (summary, indicators, ATT&CK mapping, gaps, escalation)
+
+The repository also maintains:
+- `output/examples/index.md` (human-readable table)
+- `output/examples/index.csv` (spreadsheet view)
+
+---
+
+## Scoring (Reference Only)
+
+Incident AI calculates two independent reference scores:
+- **Suspicion (0–100):** how “attack-like” the observed pattern is (e.g., high-frequency failures, many usernames)
+- **Confidence (0–100):** how complete the evidence is (e.g., source IP / host / event code present)
+
+This tool does **not** make final severity decisions.
+The scoring block provides **explainable drivers** for analyst review.
+
+---
+
 ## Example Use Case
 
 - Multiple failed SMB authentication attempts detected
