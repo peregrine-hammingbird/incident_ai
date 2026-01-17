@@ -24,6 +24,8 @@ def build_front_matter(fields: dict, scores: dict) -> str:
 
     suspicion = scores.get("suspicion", "Unknown")
     confidence = scores.get("confidence", "Unknown")
+    drivers = scores.get("drivers", [])
+    drivers_short = summarize_drivers(drivers, limit=3)
 
     fm = [
         "---\n",
@@ -34,6 +36,7 @@ def build_front_matter(fields: dict, scores: dict) -> str:
         f"event_code: {event_code}\n",
         f"suspicion: {suspicion}\n",
         f"confidence: {confidence}\n",
+        f"drivers_short: {drivers_short}\n",
         f"generated_at_utc: {generated_at}\n",
         "---\n\n",
     ]
