@@ -9,3 +9,7 @@ output/
 
 # Secrets
 .env
+
+# Local data (do not commit)
+data/
+
