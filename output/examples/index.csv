@@ -1,0 +1,4 @@
+time,alert,host,category,sid,tier,suspicion,confidence,drivers,file
+20260117-0920,DNSBeaconingSuspected,WS02,C2Suspicion,demo-sid-0003,Low,8,30,DNS-related alert (possible C2 activity); Source IP is specified; Target host is specified,20260117-0920_DNSBeaconingSuspected_WS02_C2Suspicion.md
+20260117-0910,SuspiciousPowerShellEncodedCommand,WS01,LoLBins,demo-sid-0002,Low,10,25,PowerShell-related alert (potential LoLBin activity); Target host is specified; Event code is specified,20260117-0910_SuspiciousPowerShellEncodedCommand_WS01_LoLBins.md
+20260117-0900,MultipleFailedSMBLogins,DC01,AuthAbuse,demo-sid-0001,High,80,35,Multiple failed authentications (>=25); High frequency within short time window (<=5 min); Many distinct usernames targeted (>=5),20260117-0900_MultipleFailedSMBLogins_DC01_AuthAbuse.md

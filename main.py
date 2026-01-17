@@ -124,12 +124,15 @@ def main():
 
     # 4) Call LLM (writing only)
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    model = os.getenv("INCIDENT_AI_MODEL", "gpt-4o-mini")
+    temperature = float(os.getenv("INCIDENT_AI_TEMPERATURE", "0.2"))
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_prompt},
         ],
+        temperature=temperature,
     )
     report = response.choices[0].message.content
 

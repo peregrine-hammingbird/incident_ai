@@ -1,15 +1,25 @@
-﻿# Python
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual env / tooling
 .venv/
 venv/
-
-# Output files
-output/
-
-# Secrets
 .env
+.env.*
 
-# Local data (do not commit)
-data/
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
 
+# Generated outputs (keep curated examples)
+output/*
+!output/examples/
+!output/examples/**
+
+# Datasets
+*.jsonl
