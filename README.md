@@ -1,4 +1,4 @@
-![Incident Reports Index Screenshot](docs/index_view.png)
+![Incident Reports Index Screenshot](output/examples/index.md)
 
 # Incident AI – SOC Incident Triage Support Tool
 
